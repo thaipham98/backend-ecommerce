@@ -2,7 +2,9 @@ package com.example.finalproject.Manager;
 
 import com.example.finalproject.Model.Promise;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PaxosManagerImpl implements PaxosManager{
 
     private HttpServletRequest acceptedValue;
