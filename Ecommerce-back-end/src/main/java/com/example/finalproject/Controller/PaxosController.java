@@ -1,6 +1,7 @@
 package com.example.finalproject.Controller;
 
 import com.example.finalproject.Manager.PaxosManager;
+import com.example.finalproject.Model.Promise;
 import com.example.finalproject.Response.ResponseHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -24,12 +25,12 @@ public class PaxosController {
     }
 
     @PostMapping("/accept")
-    public ResponseEntity<Object> accept(Long currentProposal, HttpServletRequest request) {
+    public ResponseEntity<Object> accept(@RequestParam Long currentProposal, HttpServletRequest request) {
         Object result = paxosManager.accept(currentProposal, request);
         return ResponseHandler.generateResponse("Success accepting!", HttpStatus.OK, result);
     }
 
-    @GetMapping("decide")
+    @PostMapping("/decide")
     public ResponseEntity<Object> decide() {
         Object result = paxosManager.decide();
         return ResponseHandler.generateResponse("Success deciding!", HttpStatus.OK, result);

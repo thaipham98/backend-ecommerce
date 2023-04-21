@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class PaxosManagerImpl implements PaxosManager{
 
-    private HttpServletRequest acceptedValue;
-    private Long acceptedProposal;
-    private boolean alreadyAccepted;
+    private HttpServletRequest acceptedValue = null;
+    private Long acceptedProposal = -1L;
+    private boolean alreadyAccepted = false;
 
     @Override
     public Promise prepare(Long currentProposal) {
