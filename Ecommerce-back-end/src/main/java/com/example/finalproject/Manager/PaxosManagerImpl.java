@@ -37,6 +37,7 @@ public class PaxosManagerImpl implements PaxosManager{
         return null;
     }
 
+    // TODO: rewrite the decide method to pass request to Service
     @Override
     public Boolean decide() {
         reset();
