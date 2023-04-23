@@ -15,4 +15,6 @@
 /Users/tienbui/Northeastern/6650/final-project/backend-ecommerce/Ecommerce-back-end/src/main/java/com/example/finalproject/Model/OrderHasProduct.java
 /Users/tienbui/Northeastern/6650/final-project/backend-ecommerce/Ecommerce-back-end/src/main/java/com/example/finalproject/Model/StoreOrderModel.java
 /Users/tienbui/Northeastern/6650/final-project/backend-ecommerce/Ecommerce-back-end/src/main/java/com/example/finalproject/Manager/PaxosManagerImpl.java
+/Users/tienbui/Northeastern/6650/final-project/backend-ecommerce/Ecommerce-back-end/src/main/java/com/example/finalproject/AppConfig.java
 /Users/tienbui/Northeastern/6650/final-project/backend-ecommerce/Ecommerce-back-end/src/main/java/com/example/finalproject/Controller/MainController.java
+/Users/tienbui/Northeastern/6650/final-project/backend-ecommerce/Ecommerce-back-end/src/main/java/com/example/finalproject/Model/ForwardRequestRepr.java
