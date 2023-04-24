@@ -2,6 +2,7 @@ package com.example.finalproject.Controller;
 
 import com.example.finalproject.Manager.PaxosManager;
 import com.example.finalproject.Model.ForwardRequestRepr;
+import com.example.finalproject.Model.Promise;
 import com.example.finalproject.Response.ResponseHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,7 @@ public class PaxosController {
         System.out.println("Paxos Controller /accept: Receiving forwarded request:\n");
         System.out.println(forwardRequest.toString());
         Object result = paxosManager.accept(proposalId, forwardRequest);
+        System.out.println("Paxos Controller /accept: Sending back response with Data (Promise):" + ((Promise)result));
         return ResponseHandler.generateResponse("Success accepting!", HttpStatus.OK, result);
     }
 

@@ -9,6 +9,7 @@ public class ForwardRequestRepr {
     String method;
     String contentType;
     String url;
+    String requestURI;
     String queryString;
     String pathInfo;
     String body;
@@ -19,6 +20,7 @@ public class ForwardRequestRepr {
             @JsonProperty("method") String method,
             @JsonProperty("contentType") String contentType,
             @JsonProperty("url") String url,
+            @JsonProperty("requestURI") String requestURI,
             @JsonProperty("queryString") String queryString,
             @JsonProperty("pathInfo") String pathInfo,
             @JsonProperty("body") String body) {
@@ -31,28 +33,37 @@ public class ForwardRequestRepr {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ForwardRequestRepr that = (ForwardRequestRepr) o;
+        return Objects.equals(method, that.method) && Objects.equals(contentType, that.contentType) && Objects.equals(url, that.url) && Objects.equals(requestURI, that.requestURI) && Objects.equals(queryString, that.queryString) && Objects.equals(pathInfo, that.pathInfo) && Objects.equals(body, that.body);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(method, contentType, url, requestURI, queryString, pathInfo, body);
+    }
+
+    @Override
     public String toString() {
         return "ForwardRequestRepr{" +
                 "method='" + method + '\'' +
                 ", contentType='" + contentType + '\'' +
                 ", url='" + url + '\'' +
+                ", requestURI='" + requestURI + '\'' +
                 ", queryString='" + queryString + '\'' +
                 ", pathInfo='" + pathInfo + '\'' +
                 ", body='" + body + '\'' +
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ForwardRequestRepr that = (ForwardRequestRepr) o;
-        return Objects.equals(method, that.method) && Objects.equals(contentType, that.contentType) && Objects.equals(url, that.url) && Objects.equals(queryString, that.queryString) && Objects.equals(pathInfo, that.pathInfo) && Objects.equals(body, that.body);
+    public String getRequestURI() {
+        return requestURI;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(method, contentType, url, queryString, pathInfo, body);
+    public void setRequestURI(String requestURI) {
+        this.requestURI = requestURI;
     }
 
     public void setMethod(String method) {

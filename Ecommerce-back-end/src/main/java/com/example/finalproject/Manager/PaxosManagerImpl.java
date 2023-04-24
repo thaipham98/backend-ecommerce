@@ -36,7 +36,7 @@ public class PaxosManagerImpl implements PaxosManager{
     @Override
     public Promise accept(Long currentProposal, ForwardRequestRepr request) {
         System.out.println("Paxos accept: Current proposal: " + currentProposal + " Accepted proposal: " + this.acceptedProposal);
-        if (currentProposal == this.acceptedProposal) {
+        if (currentProposal.equals(this.acceptedProposal)) {
             this.alreadyAccepted = true;
             this.acceptedProposal = currentProposal;
             this.acceptedValue = request;
@@ -57,7 +57,7 @@ public class PaxosManagerImpl implements PaxosManager{
 
     private void reset() {
         this.acceptedValue = null;
-        this.acceptedProposal = null;
+        this.acceptedProposal = -1L;
         this.alreadyAccepted = false;
     }
 }
