@@ -27,7 +27,7 @@ public class MainController {
     @GetMapping("/viewAllProduct")
 //    public List<Product> viewAll() {
     public ResponseEntity<Object> viewAll() {
-        //return manager.viewAllProducts();
+        System.out.println("viewAll controller called");
         try {
             List<Product> result = manager.viewAllProducts();
             return ResponseHandler.generateResponse("Success viewing all products!", HttpStatus.OK, result);
@@ -38,6 +38,7 @@ public class MainController {
 
     @GetMapping("/viewProduct/{id}")
     public ResponseEntity<Object> view(@PathVariable String id) {
+        System.out.println("view controller called with id: " + id);
         try {
             int productId = Integer.parseInt(id);
             Product result = manager.findProductById(productId);
@@ -49,6 +50,8 @@ public class MainController {
 
     @PostMapping("/addToOrder")
     public ResponseEntity<Object> addToOrder(@RequestBody Map<String, Integer> body) {
+        System.out.println("addToOrder controller called with body: ");
+        body.forEach((key, value) -> System.out.println(key + ":" + value));
         try {
             int productId = body.get("productId");
             List<OrderHasProduct> result = manager.addToOrder(productId);
@@ -100,4 +103,5 @@ public class MainController {
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.MULTI_STATUS, null);
         }
     }
+
 }
