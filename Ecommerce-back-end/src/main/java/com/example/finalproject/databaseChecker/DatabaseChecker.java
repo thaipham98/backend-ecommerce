@@ -23,12 +23,6 @@ public class DatabaseChecker {
     @Value("${spring.datasource.url}")
     private String databaseUrl;
 
-    @Value("${spring.datasource.username}")
-    private String databaseUsername;
-
-    @Value("${spring.datasource.password}")
-    private String databasePassword;
-
     @PostConstruct
     public void checkIfAllTablesExists() {
 
@@ -45,7 +39,6 @@ public class DatabaseChecker {
     }
 
     private boolean doesProductTableExist() {
-        System.out.println("HERE");
         Pattern pattern = Pattern.compile(".*\\/([^\\?]+)\\?.*");
         Matcher matcher = pattern.matcher(databaseUrl);
         String databaseName = matcher.find() ? matcher.group(1) : "";
@@ -79,7 +72,7 @@ public class DatabaseChecker {
     }
 
     private void createProductTable() {
-        try (Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword)) {
+        try (Connection connection = DriverManager.getConnection(databaseUrl)) {
             Pattern pattern = Pattern.compile(".*\\/([^\\?]+)\\?.*");
             Matcher matcher = pattern.matcher(databaseUrl);
             String databaseName = matcher.find() ? matcher.group(1) : "";
@@ -102,7 +95,7 @@ public class DatabaseChecker {
     }
 
     private void createOrderTable() {
-        try (Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword)) {
+        try (Connection connection = DriverManager.getConnection(databaseUrl)) {
             Pattern pattern = Pattern.compile(".*\\/([^\\?]+)\\?.*");
             Matcher matcher = pattern.matcher(databaseUrl);
             String databaseName = matcher.find() ? matcher.group(1) : "";
@@ -120,7 +113,7 @@ public class DatabaseChecker {
     }
 
     private void createOrderHasProductTable() {
-        try (Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword)) {
+        try (Connection connection = DriverManager.getConnection(databaseUrl)) {
             Pattern pattern = Pattern.compile(".*\\/([^\\?]+)\\?.*");
             Matcher matcher = pattern.matcher(databaseUrl);
             String databaseName = matcher.find() ? matcher.group(1) : "";
