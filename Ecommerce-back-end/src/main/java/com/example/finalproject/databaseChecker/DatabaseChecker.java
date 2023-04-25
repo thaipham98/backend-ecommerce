@@ -36,6 +36,14 @@ public class DatabaseChecker {
             createOrderHasProductTable();
         }
 
+        if (databaseUrl != "jdbc:mysql://localhost:11111/store?user=root&createDatabaseIfNotExist=true") setSlave();
+
+    }
+
+    private void setSlave() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        String sql = "STOP SLAVE; CHANGE MASTER TO MASTER_HOST=\"127.0.0.1\", MASTER_PORT=11111, MASTER_USER=\"replication\", MASTER_PASSWORD=\"password\"; ";
+        jdbcTemplate.execute(sql);
     }
 
     private boolean doesProductTableExist() {
