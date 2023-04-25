@@ -36,13 +36,22 @@ public class DatabaseChecker {
             createOrderHasProductTable();
         }
 
-        if (databaseUrl != "jdbc:mysql://localhost:11111/store?user=root&createDatabaseIfNotExist=true") setSlave();
+        if (!databaseUrl.equals("jdbc:mysql://localhost:11111/store?user=root&createDatabaseIfNotExist=true")) {
+            setSlave();
+        } else {
+            setMaster();
+        }
+    }
 
+    private void setMaster() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        String sql = "CREATE USER 'replication'@'%' IDENTIFIED WITH mysql_native_password BY 'password';";
+        jdbcTemplate.execute(sql);
     }
 
     private void setSlave() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        String sql = "STOP SLAVE; CHANGE MASTER TO MASTER_HOST=\"127.0.0.1\", MASTER_PORT=11111, MASTER_USER=\"replication\", MASTER_PASSWORD=\"password\"; ";
+        String sql = "STOP SLAVE; CHANGE MASTER TO MASTER_HOST=127.0.0.1, MASTER_PORT=11111, MASTER_USER=\"replication\", MASTER_PASSWORD=\"password\"; ";
         jdbcTemplate.execute(sql);
     }
 
