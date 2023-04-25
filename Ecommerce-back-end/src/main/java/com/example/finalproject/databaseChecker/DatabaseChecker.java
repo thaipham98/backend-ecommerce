@@ -26,33 +26,43 @@ public class DatabaseChecker {
     @PostConstruct
     public void checkIfAllTablesExists() {
 
-        if (!doesProductTableExist()) {
-            createProductTable();
-        }
-        if (!doesOrderTableExist()) {
-            createOrderTable();
-        }
-        if (!doesOrderHasProductTableExist()) {
-            createOrderHasProductTable();
-        }
-
         if (!databaseUrl.equals("jdbc:mysql://localhost:11111/store?user=root&createDatabaseIfNotExist=true")) {
             setSlave();
         } else {
             setMaster();
+
+            if (!doesProductTableExist()) {
+                createProductTable();
+            }
+            if (!doesOrderTableExist()) {
+                createOrderTable();
+            }
+            if (!doesOrderHasProductTableExist()) {
+                createOrderHasProductTable();
+            }
         }
+
+
     }
 
     private void setMaster() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         String sql = "CREATE USER 'replication'@'%' IDENTIFIED WITH mysql_native_password BY 'password';";
         jdbcTemplate.execute(sql);
+        String sql1 = "GRANT REPLICATION SLAVE ON *.* TO 'replication'@'%';";
+        jdbcTemplate.execute(sql1);
+        String sql2 = "FLUSH PRIVILEGES;";
+        jdbcTemplate.execute(sql2);
     }
 
     private void setSlave() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        String sql = "STOP SLAVE; CHANGE MASTER TO MASTER_HOST=127.0.0.1, MASTER_PORT=11111, MASTER_USER=\"replication\", MASTER_PASSWORD=\"password\"; ";
+        String sql = "STOP SLAVE;";
         jdbcTemplate.execute(sql);
+        String sql1 = "CHANGE MASTER TO MASTER_HOST=\"localhost\", MASTER_PORT=11111, MASTER_USER=\"replication\", MASTER_PASSWORD=\"password\";";
+        jdbcTemplate.execute(sql1);
+        String sql2 = "START SLAVE;";
+        jdbcTemplate.execute(sql2);
     }
 
     private boolean doesProductTableExist() {
@@ -63,6 +73,8 @@ public class DatabaseChecker {
         jdbcTemplate.execute("USE " + databaseName);
         String sql = "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = ? AND table_name = 'product')";
         boolean result = jdbcTemplate.queryForObject(sql, Boolean.class, databaseName);
+        System.out.println(result);
+        System.out.println(databaseUrl);
         return result;
     }
 

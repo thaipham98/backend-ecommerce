@@ -6,8 +6,8 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-//@EnableScheduling
-//@EnableKafka
+@EnableScheduling
+@EnableKafka
 public class MainApplication {
 
     public static void main(String[] args) {
